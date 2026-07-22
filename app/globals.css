@@ -15,8 +15,9 @@
   /* ── HIGHLIGHTS: the two colours from the earlier versions ─────
      These are NOT backgrounds any more. They carry the text, the
      outlines of the boxes, and the shadowing behind the boxes. */
-  --foreground: 246 34% 21%; /* Deep navy-purple (v1) — ink, borders, shadows */
+  --foreground: 246 34% 21%; /* Deep navy-purple (v1) — ink, borders */
   --accent: 18 64% 43%; /* Rust / terracotta (flame logo) — highlights */
+  --shadow-color: 250 55% 42%; /* Saturated purple — lifts the boxes off the pearl */
   --font-display: 'Instrument Serif', serif;
   --font-body: 'Inter', sans-serif;
 }
@@ -28,7 +29,7 @@
    Scaling the root lets text, spacing, buttons AND max-widths grow together.
    Mobile is pinned at 16px; large desktops reach 20px. */
 html {
-  font-size: clamp(16px, 12.8px + 0.31vw, 20px);
+  font-size: clamp(15px, 12.6px + 0.23vw, 18px);
 }
 
 body {
@@ -46,20 +47,20 @@ body {
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border: 1px solid hsl(var(--foreground) / 0.12);
+  border: 1px solid hsl(var(--shadow-color) / 0.16);
   box-shadow:
-    0 1px 2px hsl(var(--foreground) / 0.04),
-    0 8px 24px hsl(var(--foreground) / 0.07);
+    0 3px 8px hsl(var(--shadow-color) / 0.18),
+    0 12px 30px hsl(var(--shadow-color) / 0.32);
   position: relative;
   overflow: hidden;
   transition: all 0.3s ease;
 }
 .liquid-glass:hover {
   background: rgba(255, 255, 255, 0.92);
-  border-color: hsl(var(--foreground) / 0.2);
+  border-color: hsl(var(--shadow-color) / 0.28);
   box-shadow:
-    0 2px 4px hsl(var(--foreground) / 0.06),
-    0 12px 32px hsl(var(--foreground) / 0.12);
+    0 5px 12px hsl(var(--shadow-color) / 0.26),
+    0 18px 44px hsl(var(--shadow-color) / 0.44);
 }
 /* Soft pearl sheen across the top of the surface. */
 .liquid-glass::before {
@@ -85,10 +86,10 @@ body {
 .glass-panel {
   background: linear-gradient(180deg, hsl(var(--surface) / 0.96) 0%, hsl(var(--surface) / 0.78) 100%);
   backdrop-filter: blur(12px);
-  border: 1px solid hsl(var(--foreground) / 0.10);
+  border: 1px solid hsl(var(--shadow-color) / 0.14);
   box-shadow:
-    0 1px 2px hsl(var(--foreground) / 0.04),
-    0 10px 30px hsl(var(--foreground) / 0.07);
+    0 3px 8px hsl(var(--shadow-color) / 0.18),
+    0 14px 34px hsl(var(--shadow-color) / 0.34);
 }
 
 /* Marquee Animation */
