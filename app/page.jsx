@@ -101,20 +101,20 @@ export default function App() {
 
       {/* Hero */}
       <section className="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pt-28 pb-36 md:pt-32 md:pb-32">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover z-0 opacity-60 mix-blend-luminosity"
-        >
-          <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260314_131748_f2ca2a28-fed7-44c8-b9a9-bd9acdd5ec31.mp4" type="video/mp4" />
-        </video>
-        {/* Light pearl wash — kept subtle so the motion stays visible. Only the
+        {/* Pearl-toned hero artwork — serene portrait dissolving into birds. */}
+        <Image
+          src="/hero_bg.jpg"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="absolute inset-0 w-full h-full object-cover z-0"
+        />
+        {/* Light pearl wash — subtle, so the artwork stays visible. Only the
             bottom fades fully into the base so the "As Seen On" marquee is clean. */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[hsl(var(--background))]/20 via-[hsl(var(--background))]/10 to-[hsl(var(--background))] z-0" />
-        {/* Soft glow just behind the headline so the navy text stays readable. */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,hsl(var(--background)/0.45)_0%,transparent_65%)] z-0" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[hsl(var(--background))]/25 via-[hsl(var(--background))]/15 to-[hsl(var(--background))] z-0" />
+        {/* Soft glow behind the headline so the navy text stays readable. */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,hsl(var(--background)/0.5)_0%,transparent_68%)] z-0" />
 
         <div className="relative z-10 max-w-5xl mx-auto flex flex-col items-center mb-12 sm:mb-16">
           <h1 className="animate-fade-rise font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.08] tracking-tight text-foreground max-w-3xl">
