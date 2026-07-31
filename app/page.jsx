@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Play, Star, ArrowRight, CheckCircle2, ChevronRight, Menu, X } from 'lucide-react';
+import { Play, Star, ArrowRight, CheckCircle2, ChevronRight, ChevronLeft, Menu, X } from 'lucide-react';
 
 function useOnScreen(options) {
   const ref = useRef(null);
@@ -39,6 +39,99 @@ const PRESS = [
   { name: 'National Physique Committee USA', src: '/logos/usa.png' },
   { name: 'Fox News', src: '/logos/fox.png' },
 ];
+
+// Client testimonials shown in the rotating banner.
+const REVIEWS = [
+  {
+    text: "My regular doctor prescribed medication for stress and sleep problems for many years, but we never got to the root of the issue. Working with the Foxes has been a completely different experience. In a short time, I've been able to reduce my need for medication and finally feel…",
+    author: "S. H.",
+    date: "February 27, 2026",
+  },
+  {
+    text: "After more than 50 years of taking medication for sleep, it stopped being effective — I was waking up often throughout the night and feeling exhausted. While praying for help, my wife and I crossed paths with Travis... That meeting truly changed…",
+    author: "Steve H.",
+    date: "January 29, 2026",
+  },
+  {
+    text: "There hasn't been a single day that I haven't thought about Dr. Travis and Michelle Fox, or the impact they've had on my life. I am so deeply grateful for everything they've taught me. I truly see their teachings as gifts. My partner almost left me because of my…",
+    author: "Laura P.",
+    date: "January 6, 2026",
+  },
+];
+
+// Auto-rotating testimonial banner: advances every 6s, pauses on hover,
+// and supports manual arrows + dots.
+function ReviewsCarousel() {
+  const [index, setIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
+
+  const go = (next) => setIndex((next + REVIEWS.length) % REVIEWS.length);
+
+  useEffect(() => {
+    if (paused) return;
+    const id = setInterval(() => setIndex((i) => (i + 1) % REVIEWS.length), 6000);
+    return () => clearInterval(id);
+  }, [paused]);
+
+  const review = REVIEWS[index];
+
+  return (
+    <div
+      className="max-w-3xl mx-auto"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      <div className="glass-panel rounded-3xl px-6 py-10 sm:px-12 sm:py-14 text-center relative overflow-hidden">
+        <div className="flex justify-center text-[hsl(var(--accent))] mb-8">
+          {[1, 2, 3, 4, 5].map((star) => (
+            <Star key={star} className="w-5 h-5 fill-current" />
+          ))}
+        </div>
+
+        {/* key re-triggers the fade each time the review changes */}
+        <div key={index} className="animate-fade-rise">
+          <p className="font-display italic text-2xl md:text-3xl leading-relaxed text-foreground mb-8 min-h-[160px] md:min-h-[180px] flex items-center justify-center">
+            “{review.text}”
+          </p>
+          <div className="text-foreground font-medium">{review.author}</div>
+          <div className="text-[hsl(var(--muted-foreground))] text-xs mt-1">{review.date}</div>
+        </div>
+      </div>
+
+      {/* Controls */}
+      <div className="flex items-center justify-center gap-6 mt-8">
+        <button
+          onClick={() => go(index - 1)}
+          aria-label="Previous review"
+          className="liquid-glass rounded-full p-3 text-foreground hover:scale-105 active:scale-95 transition-transform"
+        >
+          <ChevronLeft className="w-5 h-5" />
+        </button>
+
+        <div className="flex items-center gap-2.5">
+          {REVIEWS.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setIndex(i)}
+              aria-label={`Go to review ${i + 1}`}
+              className={`h-2 rounded-full transition-all duration-300 ${
+                i === index ? 'w-7 bg-[hsl(var(--accent))]' : 'w-2 bg-foreground/20 hover:bg-foreground/40'
+              }`}
+            />
+          ))}
+        </div>
+
+        <button
+          onClick={() => go(index + 1)}
+          aria-label="Next review"
+          className="liquid-glass rounded-full p-3 text-foreground hover:scale-105 active:scale-95 transition-transform"
+        >
+          <ChevronRight className="w-5 h-5" />
+        </button>
+      </div>
+    </div>
+  );
+}
 
 export default function App() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -434,53 +527,17 @@ export default function App() {
       {/* Reviews */}
       <section id="reviews" className="relative z-10 py-16 md:py-24 px-6 bg-[hsl(var(--muted))]/30">
         <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-            <div>
-              <h2 className="font-display text-4xl md:text-5xl text-foreground mb-4">Client Experiences</h2>
-              <div className="flex items-center gap-3">
-                <div className="flex text-[hsl(var(--accent))]">
-                  {[1, 2, 3, 4, 5].map(star => <Star key={star} className="w-5 h-5 fill-current" />)}
-                </div>
-                <span className="text-foreground text-sm font-medium">5.0 on Heal.me (Verified)</span>
+          <div className="text-center mb-14">
+            <h2 className="font-display text-4xl md:text-5xl text-foreground mb-4">Client Experiences</h2>
+            <div className="flex items-center justify-center gap-3">
+              <div className="flex text-[hsl(var(--accent))]">
+                {[1, 2, 3, 4, 5].map(star => <Star key={star} className="w-5 h-5 fill-current" />)}
               </div>
+              <span className="text-foreground text-sm font-medium">5.0 on Heal.me (Verified)</span>
             </div>
-            <button className="text-[hsl(var(--muted-foreground))] hover:text-foreground transition-colors flex items-center gap-2 text-sm">
-              View all reviews <ArrowRight className="w-4 h-4" />
-            </button>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              {
-                text: "My regular doctor prescribed medication for stress and sleep problems for many years, but we never got to the root of the issue. Working with the Foxes has been a completely different experience. In a short time, I've been able to reduce my need for medication and finally feel…",
-                author: "Steve H.",
-                date: "February 27, 2026"
-              },
-              {
-                text: "After more than 50 years of taking medication for sleep, it stopped being effective — I was waking up often throughout the night and feeling exhausted. While praying for help, my wife and I crossed paths with Travis... That meeting truly changed…",
-                author: "Steve H.",
-                date: "January 29, 2026"
-              },
-              {
-                text: "There hasn't been a single day that I haven't thought about Dr. Travis and Michelle Fox, or the impact they've had on my life. I am so deeply grateful for everything they've taught me. I truly see their teachings as gifts. My partner almost left me because of my…",
-                author: "Laura P.",
-                date: "January 6, 2026"
-              }
-            ].map((review, i) => (
-              <div key={i} className="glass-panel p-8 rounded-2xl flex flex-col">
-                <div className="flex text-[hsl(var(--accent))]/50 mb-6">
-                  {[1, 2, 3, 4, 5].map(star => <Star key={star} className="w-4 h-4 fill-current" />)}
-                </div>
-                <p className="text-foreground/90 font-normal leading-relaxed italic mb-8 flex-grow">
-                  "{review.text}"
-                </p>
-                <div className="mt-auto">
-                  <div className="text-foreground font-medium">{review.author}</div>
-                  <div className="text-[hsl(var(--muted-foreground))] text-xs mt-1">{review.date}</div>
-                </div>
-              </div>
-            ))}
-          </div>
+          <ReviewsCarousel />
         </div>
       </section>
 
