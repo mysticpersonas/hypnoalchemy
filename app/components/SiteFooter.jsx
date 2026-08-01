@@ -15,9 +15,15 @@ export default function SiteFooter() {
         <div className="flex md:justify-end gap-12 md:gap-24">
           <div className="flex flex-col gap-4">
             <span className="text-foreground text-sm font-medium tracking-widest uppercase mb-2">Explore</span>
-            {['Services', 'Reviews', 'About', 'Contact'].map((link) => (
-              <Link key={link} href={`/#${link.toLowerCase()}`} className="text-[hsl(var(--muted-foreground))] text-sm hover:text-foreground transition-colors">
-                {link}
+            {[
+              { label: 'Services', href: '/#services' },
+              { label: 'Books', href: '/books' },
+              { label: 'Reviews', href: '/#reviews' },
+              { label: 'About', href: '/#about' },
+              { label: 'Contact', href: '/#contact' },
+            ].map((link) => (
+              <Link key={link.label} href={link.href} className="text-[hsl(var(--muted-foreground))] text-sm hover:text-foreground transition-colors">
+                {link.label}
               </Link>
             ))}
           </div>

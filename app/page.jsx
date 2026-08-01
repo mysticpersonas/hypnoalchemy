@@ -158,8 +158,8 @@ export default function App() {
             </a>
 
             <nav className="hidden md:flex items-center gap-8">
-              {['Services', 'Reviews', 'About', 'Contact'].map((item) => (
-                <a key={item} href={`#${item.toLowerCase()}`} className="text-sm font-medium text-[hsl(var(--muted-foreground))] hover:text-foreground transition-colors">
+              {['Services', 'Books', 'Reviews', 'About', 'Contact'].map((item) => (
+                <a key={item} href={item === 'Books' ? '/books' : `#${item.toLowerCase()}`} className="text-sm font-medium text-[hsl(var(--muted-foreground))] hover:text-foreground transition-colors">
                   {item}
                 </a>
               ))}
@@ -181,8 +181,8 @@ export default function App() {
       {/* Mobile Menu */}
       {mobileMenuOpen && (
         <div className="fixed inset-0 z-40 bg-[hsl(var(--background))] pt-24 px-6 md:hidden flex flex-col gap-6">
-          {['Services', 'Reviews', 'About', 'Contact'].map((item) => (
-            <a key={item} href={`#${item.toLowerCase()}`} onClick={() => setMobileMenuOpen(false)} className="font-display text-4xl text-foreground border-b border-foreground/10 pb-4">
+          {['Services', 'Books', 'Reviews', 'About', 'Contact'].map((item) => (
+            <a key={item} href={item === 'Books' ? '/books' : `#${item.toLowerCase()}`} onClick={() => setMobileMenuOpen(false)} className="font-display text-4xl text-foreground border-b border-foreground/10 pb-4">
               {item}
             </a>
           ))}
